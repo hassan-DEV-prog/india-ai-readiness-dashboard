@@ -1,0 +1,215 @@
+# ============================================================
+# India AI Readiness Dashboard — Central Configuration
+# ============================================================
+# DESIGN PRINCIPLE: All constants, paths, weights, and
+# parameters live here. No magic numbers in source code.
+# To change ANY project parameter, edit ONLY this file.
+# ============================================================
+
+project:
+  name: "India AI Readiness Dashboard"
+  version: "1.0.0"
+  description: "Composite index measuring AI readiness across Indian states"
+  author: "Your Name"
+  github: "https://github.com/yourusername/india-ai-readiness-dashboard"
+
+# ── Paths ────────────────────────────────────────────────────
+paths:
+  data_raw: "data/raw"
+  data_processed: "data/processed"
+  data_external: "data/external"
+  logs: "logs"
+  images: "images"
+
+# ── Raw Data Filenames ───────────────────────────────────────
+# These are the expected filenames after download/extraction.
+# The loader.py module uses these to locate files.
+data_files:
+  aicte_institutes: "aicte_approved_institutes.csv"
+  census_literacy: "census_literacy_2011.csv"
+  state_gdp: "state_gdp_gsdp.csv"
+  population: "state_population_projections.csv"
+  electricity: "cea_electricity_statewise.csv"
+  broadband: "trai_broadband_statewise.csv"
+  internet_penetration: "trai_internet_penetration.csv"
+  startups: "dpiit_startups_statewise.csv"
+  digital_literacy: "pmgdisha_beneficiaries.csv"
+  india_geojson: "india_states.geojson"
+
+# ── Pillar Definitions ───────────────────────────────────────
+# Each pillar groups raw features into a thematic dimension.
+# Features listed here are the NORMALIZED column names used
+# AFTER the ETL pipeline runs.
+pillars:
+  internet:
+    label: "Internet Readiness"
+    color: "#2196F3"
+    features:
+      - internet_penetration_pct
+      - broadband_subscribers_per_100
+      - rural_internet_pct
+  education:
+    label: "Education & Talent"
+    color: "#4CAF50"
+    features:
+      - literacy_rate_pct
+      - aicte_institutes_per_million
+      - engineering_seats_per_million
+  infrastructure:
+    label: "Infrastructure"
+    color: "#FF9800"
+    features:
+      - electrification_pct
+      - per_capita_power_consumption_kwh
+  innovation:
+    label: "Innovation Ecosystem"
+    color: "#9C27B0"
+    features:
+      - startups_per_million
+      - digital_literacy_beneficiaries_per_million
+  economy:
+    label: "Economic Strength"
+    color: "#F44336"
+    features:
+      - gsdp_per_capita_inr
+      - urbanization_pct
+
+# ── Index Weighting ──────────────────────────────────────────
+# PRIMARY method: entropy (data-driven, reproducible)
+# SENSITIVITY CHECK: equal (simple baseline comparison)
+weighting:
+  primary_method: "entropy"        # Options: entropy | equal | manual
+  sensitivity_method: "equal"
+
+  # Used ONLY if primary_method is "manual"
+  # Must sum to 1.0
+  manual_weights:
+    internet: 0.25
+    education: 0.20
+    infrastructure: 0.20
+    innovation: 0.20
+    economy: 0.15
+
+# ── Normalization ────────────────────────────────────────────
+normalization:
+  method: "minmax"                  # Options: minmax | zscore
+  clip_outliers: true               # Clip values > 3 std dev before normalizing
+  outlier_std_threshold: 3.0
+
+# ── Missing Value Strategy ───────────────────────────────────
+# Documented here so methodology.md auto-generates from config
+missing_values:
+  strategy: "median_by_region"      # Impute with regional median
+  fallback: "national_median"       # If region has < 2 states, use national
+  max_missing_pct: 0.30             # Drop feature if > 30% missing
+  flag_imputed: true                # Add boolean column marking imputed rows
+
+# ── State Name Standardization ───────────────────────────────
+# Different datasets use different spellings.
+# All names are mapped to the canonical Census 2011 name.
+state_name_mapping:
+  "Andaman & Nicobar Islands": "Andaman and Nicobar Islands"
+  "Andaman And Nicobar": "Andaman and Nicobar Islands"
+  "A & N Islands": "Andaman and Nicobar Islands"
+  "AP": "Andhra Pradesh"
+  "Arunachal": "Arunachal Pradesh"
+  "Assam (Brahmaputra Valley)": "Assam"
+  "Chattisgarh": "Chhattisgarh"
+  "Chhatisgarh": "Chhattisgarh"
+  "Delhi": "NCT of Delhi"
+  "New Delhi": "NCT of Delhi"
+  "National Capital Territory of Delhi": "NCT of Delhi"
+  "D & N Haveli": "Dadra and Nagar Haveli and Daman and Diu"
+  "Dadra & Nagar Haveli": "Dadra and Nagar Haveli and Daman and Diu"
+  "Daman & Diu": "Dadra and Nagar Haveli and Daman and Diu"
+  "J & K": "Jammu and Kashmir"
+  "J&K": "Jammu and Kashmir"
+  "Jammu & Kashmir": "Jammu and Kashmir"
+  "Orissa": "Odisha"
+  "Pondicherry": "Puducherry"
+  "Tamilnadu": "Tamil Nadu"
+  "Tamil Nadu (Combined)": "Tamil Nadu"
+  "Telengana": "Telangana"
+  "Uttarakhand": "Uttarakhand"
+  "Uttaranchal": "Uttarakhand"
+  "WB": "West Bengal"
+
+# ── Regional Groupings ───────────────────────────────────────
+# Used for regional median imputation and regional comparisons
+regions:
+  North:
+    - "Chandigarh"
+    - "Himachal Pradesh"
+    - "Jammu and Kashmir"
+    - "Ladakh"
+    - "Punjab"
+    - "Haryana"
+    - "Uttarakhand"
+    - "NCT of Delhi"
+    - "Uttar Pradesh"
+  South:
+    - "Andhra Pradesh"
+    - "Telangana"
+    - "Karnataka"
+    - "Kerala"
+    - "Tamil Nadu"
+    - "Puducherry"
+  East:
+    - "Bihar"
+    - "Jharkhand"
+    - "Odisha"
+    - "West Bengal"
+    - "Sikkim"
+  West:
+    - "Rajasthan"
+    - "Gujarat"
+    - "Maharashtra"
+    - "Goa"
+    - "Dadra and Nagar Haveli and Daman and Diu"
+  Central:
+    - "Madhya Pradesh"
+    - "Chhattisgarh"
+  Northeast:
+    - "Arunachal Pradesh"
+    - "Assam"
+    - "Manipur"
+    - "Meghalaya"
+    - "Mizoram"
+    - "Nagaland"
+    - "Tripura"
+  Islands:
+    - "Andaman and Nicobar Islands"
+    - "Lakshadweep"
+
+# ── Dashboard Display ────────────────────────────────────────
+dashboard:
+  title: "India AI Readiness Dashboard"
+  subtitle: "Measuring AI readiness across 36 states and UTs"
+  theme_primary_color: "#1E3A5F"
+  theme_accent_color: "#00BCD4"
+  map_zoom_level: 4
+  map_center_lat: 20.5937
+  map_center_lon: 78.9629
+  top_n_states: 10                  # Show top N in ranking charts
+
+# ── Clustering ───────────────────────────────────────────────
+clustering:
+  algorithm: "kmeans"
+  n_clusters: 4                     # Leaders, Challengers, Emerging, Laggards
+  cluster_labels:
+    0: "AI Leaders"
+    1: "Fast Challengers"
+    2: "Emerging Markets"
+    3: "Lagging Regions"
+  random_state: 42
+
+# ── Logging ─────────────────────────────────────────────────
+logging:
+  level: "INFO"                     # DEBUG | INFO | WARNING | ERROR
+  format: "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
+  datefmt: "%Y-%m-%d %H:%M:%S"
+  log_to_file: true
+  log_filename: "logs/pipeline.log"
+  rotate_logs: true
+  max_bytes: 5242880                # 5 MB
+  backup_count: 3

@@ -1,0 +1,47 @@
+# ============================================================
+# India AI Readiness Dashboard — Dependencies
+# Python 3.10+
+# Pin minor versions for reproducibility; allow patch updates
+# ============================================================
+
+# --- Core Data Stack ---
+pandas==2.2.2
+numpy==1.26.4
+scipy==1.13.0
+
+# --- Data Loading & Parsing ---
+pdfplumber==0.11.0          # PDF table extraction (TRAI reports)
+openpyxl==3.1.2             # Excel file support
+requests==2.32.2             # HTTP downloads
+PyYAML==6.0.1               # settings.yaml parsing
+
+# --- Feature Engineering & Statistics ---
+scikit-learn==1.5.0         # MinMaxScaler, KMeans, PCA
+
+# --- Visualization ---
+plotly==5.22.0               # Interactive charts (Streamlit + export)
+geopandas==0.14.4           # Choropleth map rendering
+mapclassify==2.6.1          # Choropleth classification schemes
+folium==0.16.0               # Alternative map rendering
+
+# --- Dashboard ---
+streamlit==1.35.0            # Primary dashboard framework
+streamlit-extras==0.4.2     # Additional Streamlit components
+
+# --- Development & Quality ---
+black==24.4.2               # Code formatter
+isort==5.13.2               # Import sorter
+flake8==7.0.0               # Linter
+pytest==8.2.1               # Testing framework
+pytest-cov==5.0.0           # Coverage reports
+
+# --- Notebook Support ---
+jupyter==1.0.0
+ipykernel==6.29.4
+nbformat==5.10.4
+
+# --- Logging & Utilities ---
+python-dotenv==1.0.1        # .env file loading
+tqdm==4.66.4                # Progress bars for ETL pipelines
+
+statsmodels==0.14.2

@@ -1,0 +1,78 @@
+# ============================================================
+# India AI Readiness Dashboard — .gitignore
+# ============================================================
+
+# ── Python ───────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+
+# ── Virtual Environments ─────────────────────────────────────
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# ── Environment Variables (secrets) ─────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Jupyter Notebooks ────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ── Data Files ───────────────────────────────────────────────
+# Raw data stays local; processed CSVs committed for reproducibility
+data/raw/*.pdf
+data/raw/*.xlsx
+data/raw/*.xls
+
+# Keep: processed CSVs and GeoJSON (small, version-controlled)
+# Keep: data/raw/*.csv (source CSVs committed for reproducibility)
+
+# ── Logs ─────────────────────────────────────────────────────
+logs/*.log
+logs/*.log.*
+
+# ── Test Coverage ────────────────────────────────────────────
+.coverage
+htmlcov/
+.pytest_cache/
+coverage.xml
+
+# ── IDE / Editor ─────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Streamlit ────────────────────────────────────────────────
+.streamlit/secrets.toml
+
+# ── Power BI ─────────────────────────────────────────────────
+# Commit the .pbix file for portfolio visibility
+# dashboard/*.pbix  ← intentionally NOT ignored
+
+# ── Misc ─────────────────────────────────────────────────────
+*.pyc
+*.pyo
+.mypy_cache/
+.ruff_cache/
