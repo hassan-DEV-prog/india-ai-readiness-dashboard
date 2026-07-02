@@ -5,9 +5,9 @@
 # ============================================================
 
 # --- Core Data Stack ---
-pandas==2.2.2
-numpy==1.26.4
-scipy==1.13.0
+pandas>=2.1.0,<3.0.0
+numpy>=1.26.0,<3.0.0
+scipy>=1.11.0,<2.0.0
 
 # --- Data Loading & Parsing ---
 pdfplumber==0.11.0          # PDF table extraction (TRAI reports)
@@ -20,8 +20,10 @@ scikit-learn==1.5.0         # MinMaxScaler, KMeans, PCA
 
 # --- Visualization ---
 plotly==5.22.0               # Interactive charts (Streamlit + export)
-geopandas==0.14.4           # Choropleth map rendering
-mapclassify==2.6.1          # Choropleth classification schemes
+# geopandas removed — GDAL not available on Streamlit Cloud
+# Maps fall back to bubble map (no GeoJSON choropleth needed for deployment)
+# geopandas==0.14.4           # Choropleth map rendering
+# mapclassify==2.6.1          # Choropleth classification schemes
 folium==0.16.0               # Alternative map rendering
 
 # --- Dashboard ---
