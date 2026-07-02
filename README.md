@@ -18,6 +18,12 @@
 
 ---
 
+## Dashboard Preview
+
+![Overview](images/screenshot_overview.png)
+![Gap Analysis](images/screenshot_gap.png)
+![Landing](images/screenshot_landing.png)
+
 ## What This Project Does
 
 Rather than listing raw statistics, this dashboard builds a **defensible composite index** — the **India AI Readiness Score** — that ranks every Indian state on their structural preparedness for an AI-driven economy.
