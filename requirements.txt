@@ -13,10 +13,10 @@ scipy>=1.11.0,<2.0.0
 pdfplumber==0.11.0          # PDF table extraction (TRAI reports)
 openpyxl==3.1.2             # Excel file support
 requests==2.32.2             # HTTP downloads
-PyYAML==6.0.1               # settings.yaml parsing
+PyYAML>=6.0.1               # settings.yaml parsing
 
 # --- Feature Engineering & Statistics ---
-scikit-learn==1.5.0         # MinMaxScaler, KMeans, PCA
+scikit-learn>=1.4.0,<2.0.0         # MinMaxScaler, KMeans, PCA
 
 # --- Visualization ---
 plotly==5.22.0               # Interactive charts (Streamlit + export)
@@ -27,8 +27,8 @@ plotly==5.22.0               # Interactive charts (Streamlit + export)
 folium==0.16.0               # Alternative map rendering
 
 # --- Dashboard ---
-streamlit==1.35.0            # Primary dashboard framework
-streamlit-extras==0.4.2     # Additional Streamlit components
+streamlit>=1.35.0,<2.0.0           # Primary dashboard framework
+streamlit-extras>=0.4.2     # Additional Streamlit components
 
 # --- Development & Quality ---
 black==24.4.2               # Code formatter
@@ -46,4 +46,4 @@ nbformat==5.10.4
 python-dotenv==1.0.1        # .env file loading
 tqdm==4.66.4                # Progress bars for ETL pipelines
 
-statsmodels==0.14.2
+statsmodels>=0.14.0
